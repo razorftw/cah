@@ -1,0 +1,28 @@
+{
+  "name": "cardsagainsthumanity",
+  "version": "1.0.0",
+  "description": "Pull requests are welcome. For major changes, please open an issue first\r to discuss what you would like to change.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razorftw/CardsAgainstHumanity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/razorftw/CardsAgainstHumanity/issues"
+  },
+  "homepage": "https://github.com/razorftw/CardsAgainstHumanity#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "http": "^0.0.1-security",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4"
+  }
+}
