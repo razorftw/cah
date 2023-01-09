@@ -1,0 +1,71 @@
+.login_background {
+  background-image: repeating-linear-gradient(
+    135deg,
+    #000 0%,
+    #000 0%,
+    #444 50%,
+    #444 100%
+  );
+  background-size: 50px 50px;
+  background-position: top left, top right, bottom left, bottom right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+}
+.login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 500px;
+}
+
+.login_header {
+  font-size: 32px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.login_nickname_label,
+.login_nickname_input {
+  width: 300px;
+  margin: 10px 0;
+  font-size: 18px;
+}
+.login_nickname_submit[type="submit"] {
+  background-color: #1da1f2;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login_nickname_submit[type="submit"]:hover + .login_nickname_submit[type="submit"]:disabled {
+  background-color: #0c7cd5;
+}
+.login_nickname_submit[type="submit"]:disabled {
+  background-color: gray;
+  opacity: 45%;
+  cursor: not-allowed;
+}
+.login_nickname_input[type="text"] {
+  border: 2px solid #1da1f2;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.error {
+  color: red;
+  margin: 0;
+}

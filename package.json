@@ -4,7 +4,7 @@
   "description": "Pull requests are welcome. For major changes, please open an issue first\r to discuss what you would like to change.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devstart": "nodemon app.js -e ejs,js,css"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,8 @@
     "http": "^0.0.1-security",
     "socket.io": "^4.5.4",
     "socket.io-client": "^4.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
