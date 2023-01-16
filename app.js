@@ -35,5 +35,16 @@ io.on('connection', (socket) => {
     });
 });
 
+function sessionChecker(req, res, next) {
+    if (req.originalUrl.startsWith("/user/new/") || req.originalUrl == "/") return next();
+    if (req.method != "POST" && !req.session.username /*|| !req.session.uuid*/) return res.redirect("/");
+    if (!checkSessions) return next()
+    if (req.originalUrl.startsWith("/user/new/") || req.originalUrl == "/") return next();
+    if (req.method != "POST" && !req.session.username) return res.redirect("/");
+    // We aren't checking for missing a uuid as it isn't implemented.
+    next();
+}
+app.use(sessionChecker);
+
 server.listen(3000);
 module.exports = app;

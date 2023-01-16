@@ -1,42 +1,61 @@
 <%-include('./header.ejs')%>
-<link rel="stylesheet" type="text/css" href="/assets/style.css">
-<div class="gamelist_row">
-  <%for (game of gameArray) { %>
-    <div id="gamelist_lobby_<%=game.gameUUID%>" class="gamelist_lobby" style="align-items: center;" tabindex="0">
-        <div class="gamelist_lobby_left">
-        <h3 style="color:black;">
-            <strong>
-                <span class="gamelist_lobby_host"><%-game.host%></span>'s Game 
-                (<span class="gamelist_lobby_player_count"><%-game.players.length%></span>/<span class="gamelist_lobby_max_players"><%-game.maxPlayers%></span>,
-                <span class="gamelist_lobby_spectator_count"><%-game.spectators.length%></span>/<span class="gamelist_lobby_max_spectators"><%-game.maxSpectators%></span>)
-            </strong>
-            <span class="gamelist_lobby_status" <%= game.progress === "Not Started" ? 'style=color:red' : 'style=color:green' %> ><%-game.progress%></span>
-        </h3>
-        <div>
-            <strong>Players:</strong>
-            <span class="gamelist_lobby_players"><%-game.players.length > 0 ? game.players.join(", ") : "None"%></span>
-        </div>
-        <div>
-            <strong>Spectators:</strong>
-            <span class="gamelist_lobby_spectators"><%-game.spectators.length > 0 ? game.spectators.join(", ") : "None"%></span>
-        </div>
-        <div>
-            <strong>Goal:</strong> <span class="gamelist_lobby_goal"><%-game.goal%></span>
-        </div>
-        <div>
-            <strong>Cards:</strong>
-            <span class="gamelist_lobby_cardset"><%-game.cardPacks.join(", ") %></span>
-        </div>
-        <div class="hide">Game <span class="gamelist_lobby_id"><%-game.gameUUID%></span></div>
-        </div>
-        <div class="gamelist_lobby_right">
-            <form action="/game/join/<%= game.password ? 'locked' : 'normal'; %>?gameUUID=<%= game.gameUUID %>" method="post">
-                <input type="submit" class="gamelist_lobby_join"  value="<%= game.password ? 'Join (Locked)' : 'Join' %>"  <%= game.players.length >= game.maxPlayers ? "disabled" : "" %>/>
-            </form>
-            <form action="/game/join/spectate?gameUUID=<%= game.gameUUID %>" method="post">
-                <input type="submit" class="gamelist_lobby_spectate"  value="Spectate"  <%= game.spectators.length >= game.maxSpectators || game.password ? "disabled" : "" %>/>
-            </form>
-        </div>
+<link rel="stylesheet" href="/assets/style.css" />
+
+<div id="error-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <p>An error occurred:</p>
+        <p id="error-message"></p>
     </div>
-  <% }%>
 </div>
+<% if (locals.error) { %>
+<script>
+    handleError('<%= locals.error %>');
+</script>
+<% } %>
+<div class="row" style="width:101.9%">
+<script src="../game.js"></script>
+
+
+<body data-bs-theme="dark" style="overflow-x: hidden;">
+    <div id="row gamelist_row">
+        <%for (game of gameArray) { %>
+            <div id="gamelist_lobby_<%=game.gameUUID%>" class="gamelist_lobby" style="align-items: center;" tabindex="0">
+                <div class="gamelist_lobby_left">
+                <h3 style="color:black;">
+                    <strong>
+                        <span class="gamelist_lobby_host"><%-game.host%></span>'s Game 
+                        (<span class="gamelist_lobby_player_count"><%-game.players.length%></span>/<span class="gamelist_lobby_max_players"><%-game.maxPlayers%></span>,
+                        <span class="gamelist_lobby_spectator_count"><%-game.spectators.length%></span>/<span class="gamelist_lobby_max_spectators"><%-game.maxSpectators%></span>)
+                    </strong>
+                    <span class="gamelist_lobby_status" <%= game.progress === "Not Started" ? 'style=color:red' : 'style=color:green' %> ><%-game.progress%></span>
+                </h3>
+                <div>
+                    <strong>Players:</strong>
+                    <span class="gamelist_lobby_players"><%-game.players.length > 0 ? game.players.join(", ") : "None"%></span>
+                </div>
+                <div>
+                    <strong>Spectators:</strong>
+                    <span class="gamelist_lobby_spectators"><%-game.spectators.length > 0 ? game.spectators.join(", ") : "None"%></span>
+                </div>
+                <div>
+                    <strong>Goal:</strong> <span class="gamelist_lobby_goal"><%-game.goal%></span>
+                </div>
+                <div>
+                    <strong>Cards:</strong>
+                    <span class="gamelist_lobby_cardset"><%-game.cardPacks.join(", ") %></span>
+                </div>
+                <div class="hide">Game <span class="gamelist_lobby_id"><%-game.gameUUID%></span></div>
+                </div>
+                <div class="gamelist_lobby_right">
+                    <form action="/game/join/<%= game.password ? 'locked' : 'normal'; %>?gameUUID=<%= game.gameUUID %>" method="post">
+                        <input type="submit" class="gamelist_lobby_join"  value="<%= game.password ? 'Join (Locked)' : 'Join' %>"  <%= game.players.length >= game.maxPlayers ? "disabled" : "" %>/>
+                    </form>
+                    <form action="/game/join/spectate?gameUUID=<%= game.gameUUID %>" method="post">
+                        <input type="submit" class="gamelist_lobby_spectate"  value="Spectate"  <%= game.spectators.length >= game.maxSpectators || game.password ? "disabled" : "" %>/>
+                    </form>
+                </div>
+            </div>
+        <% }%>
+    </div>
+</body>

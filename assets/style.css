@@ -1,3 +1,10 @@
+h2,
+h3,
+h4 {
+  font-size: 1.17em;
+  margin: 0 0 0.25em;
+}
+
 .login_background {
   background-image: repeating-linear-gradient(
     135deg,
@@ -64,14 +71,12 @@
   padding: 10px;
   font-size: 18px;
 }
-
-
 .gamelist_row {
   width: 101.9%
 }
 .gamelist_lobby {
   float: left;
-  width: 33.2%;
+  width: 33.3%;
   background: #fff;
   border-radius: 0.25em;
   height: 175px;
@@ -161,10 +166,26 @@
   font-family: Arial, sans-serif;
   font-size: 16px;
 }
-
 .modal-content p {
   color: #333;
   font-weight: bold;
+}
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  background-color: #fff; /* Use a white background */
+  border: 1px solid #888; /* Add a border */
+  border-radius: 50%; /* Make the button circular */
+  padding: 0 10px; /* Add some padding */
+}
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer; /* Add a pointer cursor on hover */
+  background-color: #ddd; /* Use a lighter background color on hover */
 }
 
 

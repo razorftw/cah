@@ -29,9 +29,7 @@ const tempGameArray = [{
 }];
 
 router.get("/", (req, res) => {
-    errorCodes = {
-        "invaild_gametype": "The game type that was sent is not a vaild game type."
-    }
+    errorCodes = require("../assets/errorCodes.json")
     const error = req.query.error;
     //console.log(errorCodes[error])
     const input = { currentUser: "Razor", gameArray: tempGameArray };
