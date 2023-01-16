@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/razorftw/CardsAgainstHumanity#readme",
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "express-socket.io-session": "^1.3.5",
+    "express-subdomain": "^1.0.5",
     "http": "^0.0.1-security",
     "socket.io": "^4.5.4",
     "socket.io-client": "^4.5.4"

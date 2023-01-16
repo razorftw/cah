@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const session = require('express-session');
 const crypto = require('node:crypto');
 const app = express();
 const path = require('path');
@@ -17,11 +16,17 @@ app.get("/", (req, res) => {
     res.render("login");
 });
 
-app.use(session({
-    secret: crypto.randomUUID(),
-    resave: false,
-    saveUninitialized: true
-}));
+session = require("express-session")({
+    secret: "my-secret",
+    resave: true,
+    saveUninitialized: true,
+    maxAge: 1000 * 60 * 60 * 24 // session max age in miliseconds (1 day)
+});
+app.use(session);
+
+app.use('/api', require("./routes/api"));
+app.use("/login", require("./routes/login"));
+app.use("/game", require("./routes/game"));
 
 io.on('connection', (socket) => {
     console.log('A connection was made.');
