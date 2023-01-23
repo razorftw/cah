@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Cards Against Humanity</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <link rel="stylesheet" type="text/css" href="/assets/style.css">
-  </head>
-  <body class="login_background">
-    <form class="login_form" method="post" action="/login">
-      <h1 class="login_header">Cards Against Humanity</h1>
-      <label class="login_nickname_label" for="nickname">Nickname:</label>
-      <input class="login_nickname_input" type="text" name="nickname" oninput="document.getElementById('loginButton').disabled = this.value.trim() === ''" placeholder="JohnDoe" id="nickname" required>
-      <input class="login_nickname_submit" type="submit" id="loginButton" value="Log In" disabled>
-      <p class="error"><%=locals.error%></p>
-    </form>
-  </body>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cards Against Humanity</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+  <link rel="stylesheet" type="text/css" href="/assets/style.css">
+</head>
+<body class="login_background">
+  <form class="login_form" method="post" action="/login">
+    <h1 class="login_header">Cards Against Humanity</h1>
+    <label class="login_nickname_label" for="nickname">Nickname:</label>
+    <input class="login_nickname_input" type="text" name="nickname" oninput="document.getElementById('loginButton').disabled = this.value.trim() === ''" placeholder="JohnDoe" id="nickname" required>
+    <input class="login_nickname_submit" type="submit" id="loginButton" value="Log In" disabled>
+    <p class="error"><%=locals.error%></p>
+  </form>
+</body>
 </html>

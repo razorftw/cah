@@ -13,7 +13,7 @@ app.use("/assets", express.static("assets"))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.get("/", (req, res) => {
-    res.render("login");
+    res.render("login.ejs");
 });
 
 session = require("express-session")({
@@ -36,12 +36,10 @@ io.on('connection', (socket) => {
 });
 
 function sessionChecker(req, res, next) {
-    if (req.originalUrl.startsWith("/user/new/") || req.originalUrl == "/") return next();
-    if (req.method != "POST" && !req.session.username /*|| !req.session.uuid*/) return res.redirect("/");
+    console.log(req.originalUrl, req.method)
+    if (!req.session.username || !req.session.uuid) return res.redirect("/");
+    if (req.method != "GET") next()
     if (!checkSessions) return next()
-    if (req.originalUrl.startsWith("/user/new/") || req.originalUrl == "/") return next();
-    if (req.method != "POST" && !req.session.username) return res.redirect("/");
-    // We aren't checking for missing a uuid as it isn't implemented.
     next();
 }
 app.use(sessionChecker);

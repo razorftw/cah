@@ -39,13 +39,15 @@ router.get("/", (req, res) => {
 })
 
 router.post("/join/:gameType", (req, res) => {
-    //console.log(req.query)
+    console.log(req.query)
+    //res.render("joinGame.ejs", req.query)
 })
 
 router.param("gameType", (req, res, next, gameType) => {
     if (!["spectate", "normal", "locked"].includes(gameType.toLowerCase())) {
         return res.redirect("http://localhost:3000/game?error=invaild_gametype");
     }
+    req.query.gameType = gameType.toLowerCase();
     next()
 });
 
