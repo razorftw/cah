@@ -4,8 +4,8 @@ const crypto = require("crypto");
 const io = require("socket.io-client");
 
 router.get("/", (req, res) => {
-    res.render("login.ejs", { });
     // redirects from '/login' to '/'
+    res.render("login.ejs");
 });
 
 router.post("/", (req, res) => {
@@ -15,9 +15,9 @@ router.post("/", (req, res) => {
         uuid: crypto.randomUUID(),
     }
     res.locals.user = req.session.user;
-    res.redirect("/game");
+    res.redirect(`/game`);
     const socket = io("http://localhost:3000/");
-    socket.emit("login", req.session.user)
+    socket.emit("createUser", req.session.user)
 });
 
 module.exports = router;

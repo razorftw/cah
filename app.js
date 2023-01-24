@@ -28,18 +28,37 @@ app.use('/api', require("./routes/api"));
 app.use("/login", require("./routes/login"));
 app.use("/game", require("./routes/game"));
 
+
+var responses = {
+    '/users': [],
+    '/games': []
+}
+
 io.on('connection', (socket) => {
     console.log('A connection was made.');
     socket.on('disconnect', () => {
         console.log('A connection was closed.');
     });
+
+    socket.on("createUser", (user) => {
+        user.socketID = socket.id;
+        responses["/users"].push(user)
+    })
+    socket.on("createGame", (game) => {
+        responses["/game"].push(game)
+    })
+
+    socket.on("getApiResponses", () => {
+        socket.emit("retrieveApiResponses", responses);
+    })
 });
 
+const checkSessions = false;
 function sessionChecker(req, res, next) {
     console.log(req.originalUrl, req.method)
     if (!req.session.username || !req.session.uuid) return res.redirect("/");
     if (req.method != "GET") next()
-    if (!checkSessions) return next()
+    if (checkSessions) return res.redirect("/");
     next();
 }
 app.use(sessionChecker);

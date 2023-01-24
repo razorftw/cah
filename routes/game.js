@@ -2,45 +2,52 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
-const tempGameArray = [{
-    host: "razor",
-    hostUUID: "fdgsfdgdf",
-    gameUUID: crypto.randomUUID(),
-    password: false,
-    maxPlayers: 10,
-    maxSpectators: 10, // SPECTATORS WILL NOT BE ADDED TILL LATER ON
-    progress: "Not Started", // Not Started, In Progress
-    players: ["razor"],
-    spectators: [], // SPECTATORS WILL NOT BE ADDED TILL LATER ON
-    goal: 10,
-    cardPacks: [],
-}, {
-    host: "razor",
-    hostUUID: "gfdghsdfgdf",
-    gameUUID: crypto.randomUUID(),
-    password: true,
-    maxPlayers: 10,
-    maxSpectators: 10, // SPECTATORS WILL NOT BE ADDED TILL LATER ON
-    progress: "Not Started", // Not Started, In Progress
-    players: ["razor", "razor"],
-    spectators: [], // SPECTATORS WILL NOT BE ADDED TILL LATER ON
-    goal: 15,
-    cardPacks: [],
-}];
+const fs = require('fs');
+const path = require('path');
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+    if (req.session.user === undefined) return res.redirect("/")
     errorCodes = require("../assets/errorCodes.json")
     const error = req.query.error;
     //console.log(errorCodes[error])
-    const input = { currentUser: "Razor", gameArray: tempGameArray };
-    if (error) input.error = errorCodes[error];
-    //console.log(input)
-    res.render("gameMenu.ejs", input);
+    fetch("http://localhost:3000/api/games")
+    .then(response => response.json())
+    .then(gameArray => {
+        const input = { userID: req.session.user.uuid, gameArray: JSON.stringify(gameArray)};
+        if (error) input.error = errorCodes[error];
+        res.render("gameMenu.ejs", input);
+    });
+    
+})
+
+router.get("/create", (req, res) => {
+    if (req.session.user === undefined) return res.redirect("/")
+    host = req.session.user
+    const deckFiles = fs.readdirSync(path.join(__dirname, "../decks"))
+    var cardsets = {};
+    for (deck of deckFiles) {
+        deckData = require(`../decks/${deck}`)
+        cardsets[deckData.cardsetUUID] = deckData
+    }
+    const game = {
+        host: host.username,
+        hostUUID: host.uuid,
+        gameUUID: crypto.randomUUID(),
+        password: false,
+        maxPlayers: 10,
+        maxSpectators: 10,
+        progress: "Not Started",
+        players: [host.username],
+        spectators: [],
+        goal: 10,
+        cardPacks: [],
+    }
+    res.render("createGame.ejs", { cardsets: cardsets, currentGame: game})
 })
 
 router.post("/join/:gameType", (req, res) => {
     console.log(req.query)
-    //res.render("joinGame.ejs", req.query)
+    res.render("joinGame.ejs", req.query)
 })
 
 router.param("gameType", (req, res, next, gameType) => {

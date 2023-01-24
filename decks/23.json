@@ -1,0 +1,20 @@
+{
+    "cardsetName": "NASA Pack",
+    "description": "NASA Pack",
+    "cardsetUUID": 466,
+    "dateMade": "10\/16\/2020",
+    "whiteCards": [
+        2240,
+        2241,
+        2242,
+        2235,
+        2236,
+        2237,
+        2238,
+        2239
+    ],
+    "blackCards": [
+        465,
+        467
+    ]
+}
