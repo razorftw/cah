@@ -43,9 +43,11 @@ io.on('connection', (socket) => {
     socket.on("createUser", (user) => {
         user.socketID = socket.id;
         responses["/users"].push(user)
+        console.log('A user was created.');
     })
     socket.on("createGame", (game) => {
-        responses["/game"].push(game)
+        responses["/games"].push(game)
+        console.log('A game was created.');
     })
 
     socket.on("getApiResponses", () => {
@@ -55,9 +57,11 @@ io.on('connection', (socket) => {
 
 const checkSessions = false;
 function sessionChecker(req, res, next) {
+    ignoreList = ["/favicon.ico"]
+    if (ignoreList.indexOf(req.originalUrl) != -1) return next()
     console.log(req.originalUrl, req.method)
+    if (req.method != "GET") return next();
     if (!req.session.username || !req.session.uuid) return res.redirect("/");
-    if (req.method != "GET") next()
     if (checkSessions) return res.redirect("/");
     next();
 }

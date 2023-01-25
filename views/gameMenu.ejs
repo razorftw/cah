@@ -120,7 +120,6 @@
                         if (e.target.form.action.includes("/game/join/locked")) {
                             var password = prompt("Please enter the password to join the game:");
                             if (password === "password") {
-                                // the post request
                                 e.target.form.submit();
                             } else {
                                 alert("Incorrect password, please try again.");

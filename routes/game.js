@@ -4,6 +4,7 @@ const router = express.Router();
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const io = require("socket.io-client");
 
 router.get("/", async (req, res) => {
     if (req.session.user === undefined) return res.redirect("/")
@@ -23,10 +24,10 @@ router.get("/", async (req, res) => {
 router.get("/create", (req, res) => {
     if (req.session.user === undefined) return res.redirect("/")
     host = req.session.user
-    const deckFiles = fs.readdirSync(path.join(__dirname, "../decks"))
+    const deckFiles = fs.readdirSync(path.join(__dirname, "../publicDecks"))
     var cardsets = {};
     for (deck of deckFiles) {
-        deckData = require(`../decks/${deck}`)
+        deckData = require(`../publicDecks/${deck}`)
         cardsets[deckData.cardsetUUID] = deckData
     }
     const game = {
@@ -42,7 +43,34 @@ router.get("/create", (req, res) => {
         goal: 10,
         cardPacks: [],
     }
+    const socket = io("http://localhost:3000/", {
+        query: {
+            socketId: host.socketID
+        }
+    })
+    socket.emit("createGame", game);
+    
     res.render("createGame.ejs", { cardsets: cardsets, currentGame: game})
+})
+
+router.post("/createGameUpdate", (req, res, next) => {
+    console.log(req.body)
+    fetch('http://localhost:3000/api/users')
+    .then(response => response.json())
+    .then(data => {
+        var user = data.find(function(data) {
+            return data.uuid === req.body.hostUUID;
+        });
+        if (user) {
+            const socket = io("http://localhost:3000/", {
+                query: {
+                    socketId: user.socketID
+                }
+            })
+            socket.emit("createGameUpdate", req.body);
+            res.sendStatus(201);
+        } 
+    })
 })
 
 router.post("/join/:gameType", (req, res) => {

@@ -1,7 +1,7 @@
 {
-    "name": "Reject Pack 2",
-    "description": "Reject Pack 2",
-    "id": 541,
+    "cardsetName": "Reject Pack 2",
+    "cardsetUUID": 541,
+    "dateMade": "10\/16\/2020",
     "whiteCards": [
         2500,
         2501,

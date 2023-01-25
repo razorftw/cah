@@ -14,10 +14,15 @@ router.post("/", (req, res) => {
         username: req.body.nickname,
         uuid: crypto.randomUUID(),
     }
+    console.log(req.body)
     res.locals.user = req.session.user;
-    res.redirect(`/game`);
     const socket = io("http://localhost:3000/");
-    socket.emit("createUser", req.session.user)
+    socket.on("connect", () => { 
+        req.session.user.socketID = socket.id;
+        console.log(socket.id)
+        res.redirect(`/game`);
+        socket.emit("createUser", req.session.user)
+    });
 });
 
 module.exports = router;
