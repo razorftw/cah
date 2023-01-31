@@ -53,7 +53,13 @@ router.get("/create", (req, res) => {
     res.render("createGame.ejs", { cardsets: cardsets, currentGame: game})
 })
 
-router.post("/createGameUpdate", (req, res, next) => {
+router.post("/createGameUpdate", (req, res) => {
+    const deckFiles = fs.readdirSync(path.join(__dirname, "../publicDecks"))
+    var cardsets = {};
+    for (deck of deckFiles) {
+        deckData = require(`../publicDecks/${deck}`)
+        cardsets[deckData.cardsetUUID] = deckData
+    }
     console.log(req.body)
     fetch('http://localhost:3000/api/users')
     .then(response => response.json())
@@ -67,10 +73,20 @@ router.post("/createGameUpdate", (req, res, next) => {
                     socketId: user.socketID
                 }
             })
-            socket.emit("createGameUpdate", req.body);
-            res.sendStatus(201);
+            const updatedValues = {
+                password: false,
+                maxPlayers: 10,
+                maxSpectators: 10,
+                //progress: "Not Started",
+                goal: 10,
+                cardPacks: req.body.card_set,
+            }
+            socket.emit("updateGameData", req.body.hostUUID, updatedValues, function(updatedGame){
+                res.render("createGame.ejs", { cardsets: cardsets, currentGame: updatedGame})
+            })
         } 
     })
+
 })
 
 router.post("/join/:gameType", (req, res) => {

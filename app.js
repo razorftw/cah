@@ -50,9 +50,20 @@ io.on('connection', (socket) => {
         console.log('A game was created.');
     })
 
+    socket.on("updateGameData", (hostUUID, updatedValues, cb) => {
+        const gameToUpdate = responses["/games"].find(game => game.hostUUID === hostUUID);
+        Object.assign(gameToUpdate, updatedValues);
+        const updatedGame = responses["/games"].find(game => game.hostUUID === hostUUID);
+        cb(updatedGame);
+    })
+
+
+
     socket.on("getApiResponses", () => {
         socket.emit("retrieveApiResponses", responses);
     })
+
+
 });
 
 const checkSessions = false;

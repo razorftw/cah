@@ -10,6 +10,7 @@
     crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
 </head>
 <link rel="stylesheet" href="/assets/style.css" />
 
@@ -30,14 +31,30 @@
     </div>
   </nav>
 
-  <form method="post" action="/game/createGameUpdate" id="gameUpdateForm">
+  <fieldset>
+    <legend>Public Card Sets</legend>
+    <%for (cardset of Object.values(locals.cardsets)) { %>
+      <span class="nowrap">
+        <%console.log([cardset.cardsetUUID, currentGame.cardPacks.indexOf(cardset.cardsetUUID)])%>
+        <input type="checkbox" id="<%=cardset.cardsetUUID%>" class="card_set"
+          title="<%=cardset.cardsetName%> - <%=cardset.dateMade%>) <%=cardset.blackCards.length%> black cards, <%=cardset.whiteCards.length%> white cards."
+          value="<%=cardset.cardsetUUID%>" name="card_set" <%=currentGame.cardPacks.indexOf(cardset.cardsetUUID) == -1 ? '' : 'checked=checked'%>>
+        <label for="<%=cardset.cardsetUUID%>"
+          title="<%=cardset.cardsetName%> - <%=cardset.dateMade%>) <%=cardset.blackCards.length%> black cards, <%=cardset.whiteCards.length%> white cards."
+          class="card_set_label">
+          <%=cardset.cardsetName%>
+        </label>
+      </span>
+      <%}%>
+  </fieldset>
+  <%if (locals.customCardsets) {%>
     <fieldset>
-      <legend>Public Card Sets</legend>
-      <%for (cardset of Object.values(locals.cardsets)) { %>
+      <legend>Your Card Sets</legend>
+      <%for (cardset of Object.values(locals.customCardsets)) { %>
         <span class="nowrap">
           <input type="checkbox" id="<%=cardset.cardsetUUID%>" class="card_set"
             title="<%=cardset.cardsetName%> - <%=cardset.dateMade%>) <%=cardset.blackCards.length%> black cards, <%=cardset.whiteCards.length%> white cards."
-            value="<%=cardset.cardsetUUID%>" name="card_set">
+            value="<%=cardset.cardsetUUID%>" name="card_set" <%=currentGame.cardPacks.indexOf(cardset.cardsetUUID) == -1 ? '' : 'checked=checked'%>>
           <label for="<%=cardset.cardsetUUID%>"
             title="<%=cardset.cardsetName%> - <%=cardset.dateMade%>) <%=cardset.blackCards.length%> black cards, <%=cardset.whiteCards.length%> white cards."
             class="card_set_label">
@@ -46,37 +63,29 @@
         </span>
         <%}%>
     </fieldset>
-    <%if (locals.customCardsets) {%>
-      <fieldset>
-        <legend>Your Card Sets</legend>
-        <%for (cardset of Object.values(locals.customCardsets)) { %>
-          <span class="nowrap">
-            <input type="checkbox" id="<%=cardset.cardsetUUID%>" class="card_set"
-              title="<%=cardset.cardsetName%> - <%=cardset.dateMade%>) <%=cardset.blackCards.length%> black cards, <%=cardset.whiteCards.length%> white cards."
-              value="<%=cardset.cardsetUUID%>" name="card_set">
-            <label for="<%=cardset.cardsetUUID%>"
-              title="<%=cardset.cardsetName%> - <%=cardset.dateMade%>) <%=cardset.blackCards.length%> black cards, <%=cardset.whiteCards.length%> white cards."
-              class="card_set_label">
-              <%=cardset.cardsetName%>
-            </label>
-          </span>
-          <%}%>
-      </fieldset>
-      <div class="hide">hostUUID <span class="gameHostUUID"><%-currentGame.hostUUID%></span></div>
-    <%}%>
-    <script>
-      var checkboxes = document.querySelectorAll('.card_set');
-      var form = document.getElementById('gameUpdateForm');
-      var hiddenInput = document.createElement("input");
-      hiddenInput.setAttribute("type", "hidden");
-      hiddenInput.setAttribute("name", "hostUUID");
-      hiddenInput.setAttribute("value", "<%-currentGame.hostUUID%>");
-      form.appendChild(hiddenInput);
-      checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-          document.getElementById('gameUpdateForm').submit();
-        });
+    <div class="hide">hostUUID <span class="gameHostUUID"><%-currentGame.hostUUID%></span></div>
+  <%}%>
+  <script>
+    fetch('http://localhost:3000/api/users')
+    .then(response => response.json())
+    .then(data => {
+      var user = data.find(function(data) {
+          return data.uuid === "<%-currentGame.hostUUID%>";
       });
-    </script>
-  </form>
+      if (user) {
+        const socket = io("http://localhost:3000/", {
+            query: {
+                socketId: user.socketID
+            }
+        })
+        // Setup an 'on' event listener for runGameUpdate
+        socket.on("runGameUpdate")
+        // If runGameUpdate is ran, If the checkboxes are visible. If the checkbox id is included in the <%currentGame.cardPacks%> then check the box.
+        // If runGameUpdate is ran check for new players leaving or joining
+
+
+
+      }
+    })
+  </script>
 </body>
