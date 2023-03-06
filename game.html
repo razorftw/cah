@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cards Against Humanity</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/assets/style.css">
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const loginForm = document.querySelector(".loginForm");
+        const gameMenu = document.querySelector(".gameMenu");
+        
+        loginForm.addEventListener("submit", function(event) {
+          event.preventDefault();
+          loginForm.classList.add("hidden");
+          gameMenu.classList.remove("hidden");
+        });
+      });
+    </script>
+  </head>
+  <body data-bs-theme="dark" style="overflow-x: hidden;">
+    <form class="loginForm">
+      <h1 class="login_header">Cards Against Humanity</h1>
+      <label class="login_nickname_label" for="nickname">Nickname:</label>
+      <input class="login_nickname_input" type="text" name="nickname" oninput="document.getElementById('loginButton').disabled = this.value.trim() === ''" placeholder="JohnDoe" id="nickname" required>
+      <input class="login_nickname_submit" type="submit" id="loginButton" value="Log In">
+      <p class="error"></p>
+    </form>
+    <div class="gameMenu hidden">
+      <div class="row" style="width:101.9%">
+        <nav class="navbar navbar-expand bg-body-tertiary bg-dark">
+            <div class="container-fluid" style="height: 25px; overflow-y: hidden">
+              <ul class=" navbar-nav nav-pills me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link menubar menubar_left" href="/game/create">Create Game</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link menubar menubar_left" href="/game/refresh">Refresh Games</a>
+                </li>
+      
+                <div>
+                  <input
+                    type="text"
+                    class="form-control bg-dark"
+                    id="searchInput"
+                    oninput="onInputHandler(this)"
+                    placeholder="Filter games by keyword"
+                  />
+                </div>
+              </ul>
+              <div class="nav-item">
+                <a
+                  class="nav-link menubar menubar_right"
+                  style="color: #f44444"
+                  href="/user/logout"
+                  >Logout</a
+                >
+              </div>
+            </div>
+          </nav>
+    </div>
+  </body>
+</html>

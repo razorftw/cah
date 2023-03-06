@@ -1,0 +1,224 @@
+h2,
+h3,
+h4 {
+  font-size: 1.17em;
+  margin: 0 0 0.25em;
+}
+
+.login_background {
+  background-image: repeating-linear-gradient(
+    135deg,
+    #000 0%,
+    #000 0%,
+    #444 50%,
+    #444 100%
+  );
+  background-size: 50px 50px;
+  background-position: top left, top right, bottom left, bottom right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+}
+.login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 500px;
+}
+
+.login_header {
+  font-size: 32px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.login_nickname_label,
+.login_nickname_input {
+  width: 300px;
+  margin: 10px 0;
+  font-size: 18px;
+}
+.login_nickname_submit[type="submit"] {
+  background-color: #1da1f2;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login_nickname_submit[type="submit"]:hover + .login_nickname_submit[type="submit"]:disabled {
+  background-color: #0c7cd5;
+}
+.login_nickname_submit[type="submit"]:disabled {
+  background-color: gray;
+  opacity: 45%;
+  cursor: not-allowed;
+}
+.login_nickname_input[type="text"] {
+  border: 2px solid #1da1f2;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+}
+.gamelist_row {
+  width: 101.9%
+}
+.gamelist_lobby {
+  float: left;
+  width: 33.3%;
+  background: #fff;
+  border-radius: 0.25em;
+  height: 175px;
+  float: left;
+  border: 1px solid #ccc;
+  margin-left: 1px;
+}
+.gamelist_lobby_left {
+  width: 77%;
+  height: 100%;
+  padding: 0.5em 1.5%;
+  float: left;
+}
+.gamelist_lobby_host {
+  width: auto;
+}
+.gamelist_lobby_player_count {
+  width: auto;
+}
+.gamelist_lobby_max_players {
+  width: auto;
+}
+.gamelist_lobby_spectator_count {
+  width: auto;
+}
+.gamelist_lobby_max_spectators {
+  width: auto;
+}
+.gamelist_lobby_status {
+  width: auto;
+}
+.gamelist_lobby_players {
+  width: auto;
+}
+.gamelist_lobby_spectators {
+  width: auto;
+}
+.gamelist_lobby_goal {
+  width: auto;
+}
+.gamelist_lobby_cardset {
+  width: auto;
+}
+.gamelist_lobby_right {
+  width: 20%;
+  height: 100%;
+  float: right;
+}
+.gamelist_lobby_join {
+  width: 100%;
+  height: 100%;
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: normal;
+}
+.gamelist_lobby_spectate {
+  width: 100%;
+  height: 100%;
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: normal;
+}
+.gamelist_lobby_join_form {
+  width: 100%;
+  height: 75%;
+  border: 0.5px solid #aaa;
+  background: linear-gradient(#fff, #ddd) #ddd;
+  border-radius: 0.25em;
+}
+.gamelist_lobby_spectate_form {
+  width: 100%;
+  height: 25%;
+  border: 1px solid #aaa;
+  background: linear-gradient(#fff, #ddd) #ddd;
+  border-radius: 0.25em;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; 
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+.modal-content p {
+  color: #333;
+  font-weight: bold;
+}
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  background-color: #fff; /* Use a white background */
+  border: 1px solid #888; /* Add a border */
+  border-radius: 50%; /* Make the button circular */
+  padding: 0 10px; /* Add some padding */
+}
+.close-button:hover,
+.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer; /* Add a pointer cursor on hover */
+  background-color: #ddd; /* Use a lighter background color on hover */
+}
+
+fieldset {
+  background-color: #343a40;
+  border: #adb5bdbf;
+  width: 50%;
+}
+
+.nowrap {
+  white-space: nowrap
+}
+
+.checkbox input {
+  vertical-align: middle
+}
+
+.error {
+  color: red;
+  margin: 0;
+}
+.hidden {
+  display: none;
+}
+
+
+
+
